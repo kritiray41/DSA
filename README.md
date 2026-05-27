@@ -86,18 +86,6 @@ Example:
 
 ---
 
-# Progress Tracker
-
-| Topic | Problems Solved |
-|-------|----------------|
-| Arrays | 0 |
-| Strings | 0 |
-| Linked List | 0 |
-| Trees | 0 |
-| Graphs | 0 |
-| Dynamic Programming | 0 |
-
----
 
 # How to Run
 
@@ -112,8 +100,8 @@ g++ filename.cpp
 
 # Connect With Me
 
-- GitHub: your-github-link
-- LeetCode: your-leetcode-profile-link
+- GitHub:https://github.com/kritiray41/kritiray.git
+
 
 ---
 
