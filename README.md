@@ -1,43 +1,119 @@
-# Palindrome Number
+# DSA Practice Repository
 
-## Problem
-Given an integer `x`, return `true` if `x` is a palindrome, and `false` otherwise.
+Welcome to my Data Structures and Algorithms (DSA) repository.  
+This repository contains my solutions to coding problems from platforms like LeetCode, GeeksforGeeks, and Coding Ninjas.
 
-## Approach
-- Reverse the integer
-- Compare reversed number with original number
-- If both are same, then it is palindrome
+The goal of this repository is to improve problem-solving skills, strengthen core DSA concepts, and maintain consistency in coding practice.
 
-## Time Complexity
-O(log n)
+---
 
-## Space Complexity
-O(1)
+# Topics Covered
 
-## C++ Solution
+- Arrays
+- Strings
+- Linked Lists
+- Stacks & Queues
+- Trees
+- Binary Search
+- Recursion & Backtracking
+- Sliding Window
+- Hashing
+- Dynamic Programming
+- Graphs
+
+---
+
+# Language Used
+
+- C++
+
+---
+
+# Repository Structure
+
+```bash
+DSA/
+│
+├── Arrays/
+├── Strings/
+├── LinkedList/
+├── Trees/
+├── Graphs/
+├── Dynamic_Programming/
+├── Sliding_Window/
+└── README.md
+```
+
+Each folder contains topic-wise problems for easy navigation and revision.
+
+---
+
+# Problem Format
+
+Each solution file includes:
+
+- Problem Name
+- Platform Link
+- Approach / Logic
+- Time Complexity
+- Space Complexity
+
+Example:
 
 ```cpp
-class Solution {
-public:
-    bool isPalindrome(int x) {
-
-        if (x < 0) {
-            return false;
-        }
-
-        int original = x;
-        long long rev = 0;
-
-        while (x > 0) {
-
-            int digit = x % 10;
-
-            rev = rev * 10 + digit;
-
-            x /= 10;
-        }
-
-        return original == rev;
-    }
-};
+// LeetCode: https://leetcode.com/problems/two-sum/
+// Time Complexity: O(n)
+// Space Complexity: O(n)
 ```
+
+---
+
+# Goals
+
+- Practice DSA consistently
+- Prepare for coding interviews
+- Improve coding efficiency
+- Learn optimized approaches
+- Build strong problem-solving skills
+
+---
+
+# Platforms
+
+- LeetCode
+- GeeksforGeeks
+- Coding Ninjas
+
+---
+
+# Progress Tracker
+
+| Topic | Problems Solved |
+|-------|----------------|
+| Arrays | 0 |
+| Strings | 0 |
+| Linked List | 0 |
+| Trees | 0 |
+| Graphs | 0 |
+| Dynamic Programming | 0 |
+
+---
+
+# How to Run
+
+Compile and run any C++ file using:
+
+```bash
+g++ filename.cpp
+./a.out
+```
+
+---
+
+# Connect With Me
+
+- GitHub: your-github-link
+- LeetCode: your-leetcode-profile-link
+
+---
+
