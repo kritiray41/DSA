@@ -1,0 +1,36 @@
+class Solution {
+public:
+int canMakeMbouqe(vector<int>& bloomDay, int mid, int k){
+    int bouqecnt=0;
+    int consecutivecnt=0;
+    for(int i=0;i<bloomDay.size();i++){
+        if(bloomDay[i]<=mid){
+            consecutivecnt++;
+
+
+        } else{
+            consecutivecnt=0;
+        }
+        if(consecutivecnt==k){
+            bouqecnt++;
+            consecutivecnt=0;
+        }
+    }
+    return bouqecnt;
+}
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int st_days=0;
+        int end_days=*max_element(begin(bloomDay),end(bloomDay));
+        int min_days=-1;
+        while(st_days<=end_days){
+            int mid=(st_days+end_days)/2;
+            if(canMakeMbouqe(bloomDay,mid,k)>=m){
+                min_days=mid;
+                end_days=mid-1;
+            }else{
+                st_days=mid+1;
+            }
+        }
+        return min_days;
+    }
+};
