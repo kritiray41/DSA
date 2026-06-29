@@ -1,0 +1,48 @@
+# Intuition
+Since each row is sorted and the first element of every row is greater than the last element of the previous row, the entire matrix can be viewed as a single sorted 1D array. Instead of searching row by row, we perform binary search on this virtual array and convert the 1D index back to its corresponding row and column.
+
+# Approach
+1. Let `m` be the number of rows and `n` be the number of columns.
+2. Treat the matrix as a sorted array of size `m * n`.
+3. Initialize `start = 0` and `end = m * n - 1`.
+4. Perform binary search:
+   - Compute `mid = start + (end - start) / 2`.
+   - Convert the 1D index to 2D indices:
+     - `row = mid / n`
+     - `col = mid % n`
+   - Compare `matrix[row][col]` with the target.
+     - If it is greater, search the left half.
+     - If it is smaller, search the right half.
+     - Otherwise, return `true`.
+5. If the search ends without finding the target, return `false`.
+
+# Complexity
+- **Time complexity:** `O(log(m × n))`
+- **Space complexity:** `O(1)`
+
+# Code
+```cpp
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+
+        int start = 0;
+        int end = m * n - 1;
+
+        while (start <= end) {
+            int mid = start + (end - start) / 2;
+
+            if (matrix[mid / n][mid % n] > target) {
+                end = mid - 1;
+            } else if (matrix[mid / n][mid % n] < target) {
+                start = mid + 1;
+            } else {
+                return true;
+            }
+        }
+
+        return false;
+    }
+};
