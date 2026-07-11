@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxDepth(string s) {
+        int openbracet=0;
+        int result=0;
+        for(char &ch:s){
+            if(ch=='('){
+                openbracet++;
+
+            }
+            else if(ch==')'){
+                openbracet--;
+            }
+            result=max(result,openbracet);
+        }
+        return result;
+        
+    }
+};
