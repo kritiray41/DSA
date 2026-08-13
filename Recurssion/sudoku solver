@@ -1,0 +1,80 @@
+Intuition
+
+We need to fill every empty cell (.) with a digit from 1 to 9. For each empty cell, we try every possible digit and check whether it is valid in the current row, column, and 3 × 3 subgrid.
+
+If placing a digit eventually leads to a solution, we keep it. Otherwise, we undo the placement and try another digit. This is backtracking.
+
+Approach
+
+Traverse the Sudoku board to find an empty cell.
+Try digits from '1' to '9'.
+Use isvalid() to check whether the digit:
+does not already exist in the same row,
+does not already exist in the same column,
+does not already exist in the same 3 × 3 subgrid.
+If valid, place the digit and recursively call solve().
+If the recursive call fails, reset the cell back to '.' and try the next digit.
+If no digit works, return false to backtrack.
+If there are no empty cells left, return true.
+
+Complexity
+
+Time complexity: O(9
+N
+) in the worst case, where N is the number of empty cells.
+Space complexity: O(N) for the recursion stack, where N is the number of empty cells.
+
+
+CODE
+class Solution {
+public:
+  bool isvalid(vector<vector<char>>& board,int row,int col,char d){
+    for(int i=0;i<9;i++){
+        if(board[row][i]==d)
+        return false;
+        if(board[i][col]==d)
+        return false;
+    }
+    int start_i=row/3*3;
+    int start_j=col/3*3;
+    for(int k=0;k<3;k++){
+        for(int l=0;l<3;l++){
+            if(board[start_i+k][start_j+l]==d)
+            return false;
+        }
+    }
+    return true;
+  }
+   bool solve(vector<vector<char>>& board){
+        for(int i=0;i<9;i++){
+            for(int j=0;j<9;j++){
+                if(board[i][j]!='.'){
+                    continue;
+                }
+                if(board[i][j]=='.'){
+                     for(int d='1';d<='9';d++){
+                        if(isvalid(board,i,j,d)){
+                            board[i][j]=d;
+                            if(solve(board)==true){
+                               return true; 
+                            }
+                            board[i][j]='.';
+                        }
+                     }
+                     return false;
+                }
+                
+            }
+        }
+        return true;
+    }
+
+    void solveSudoku(vector<vector<char>>& board) {
+        solve(board);
+
+    }
+    
+};
+
+
+
