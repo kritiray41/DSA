@@ -1,0 +1,27 @@
+class Solution {
+public:
+    int countPrimes(int n) {
+        if (n <= 2) return 0; // No primes strictly less than 2
+
+        // Fast byte vector
+        vector<char> is_prime(n, true);
+
+        // Start count at 1 to include '2' (the only even prime)
+        int count = 1;
+
+        // Check ONLY odd numbers starting from 3
+        for (int i = 3; i < n; i += 2) {
+            if (is_prime[i]) {
+                count++; // Found a prime!
+                
+                // Mark only odd multiples of i (step by 2*i to skip even multiples)
+                // e.g., for i = 3: marks 9, 15, 21... (skips 12, 18, 24)
+                for (long long j = (long long)i * i; j < n; j += 2 * i) {
+                    is_prime[j] = false;
+                }
+            }
+        }
+
+        return count;
+    }
+};
