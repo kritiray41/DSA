@@ -1,0 +1,30 @@
+class solution{
+public:
+bool isdfs(unordered_map<int,vector<int>>& adj,int u,vector<int>& visited,vector<int>& inrecurssion){
+  visited[u]=true;
+  inrecurssion[u]=true;
+for(int&v:adj[u]){
+//if not visited then hit dfs on v
+if(!visited[v] && iscycledfs(adj.v,visited,inrecurssion))
+return true;//cycle hai
+else if(inrecurssion[v]==true)
+  return true;
+}
+inrecurssion[u]=false;
+return false;
+}
+bool canfinish(int numcourses,vector<vector<int>>& prerequisites){
+  vector<bool> visited(numcourses,false);
+vector<bool> inrecurssion(numcourses,false);
+for(int&vec:prerequisites){
+int a=vec[0];
+int b=vec[1];
+adj[b].push_back(a);
+}
+for(int i=0;i<numcourses;i++){
+if(!visited[i] && iscycledfs(adj.v,visited,inrecurssion))
+  return false;//course complete nhi kr sakte 
+}
+return true;//complete kr sakte hai saaare courses
+}
+};
