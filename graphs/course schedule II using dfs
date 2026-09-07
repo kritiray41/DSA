@@ -1,0 +1,47 @@
+class solution{
+public:
+bool hascycle;
+void dfs(unordered_map<int,vector<int>>& adj,int u,vector<bool>& visited,stack<int>&st,vector<bool>&inrecurrsion){
+visited[u]=true;
+inrecurssion[u]=true;
+for(int &v:adj[u]){
+if(inrecurssion[v]==true){
+hascycle=true;
+return;
+}
+if(!visited[v]){
+dfs(adj,v,visited,st,inrecurssion);
+}
+}
+st.push(u);
+  inrecurssion[u]=false;
+}
+
+vector<int>findorder(int numcourses,vector<vecotr<int>>& prerequisites){
+  unordered_map<int,vector<int>> adj;
+vector<int> inrecurssion(numcourses,false);
+vector<bool> visited(numcourses,false);
+hascycle=false;
+for(auto &vec:prerequisites){
+int a=vec[0];
+int b=vec[1];
+adj[b].push_back(a);
+}
+stack<int> st;
+for(int i=0; i<numcourses;i++){
+if(!visited[i])
+  dfs(adj,i.visited,st,inrecurssion);
+}
+if(hascycle==true){
+return{};
+vector<int> result;
+while(!st.empty()){
+result.push_back(st.top());
+st.pop();
+return result;
+}
+};
+
+
+  
+  
