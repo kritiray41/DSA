@@ -1,0 +1,27 @@
+class solution{
+public:
+bool checkbipartitedfs(vector<vector<int>> graph,int curr,vector<int>& color,int currcolor){
+color[curr]=currcolor;
+for(int&v:graph[curr]){
+if(color[v]==color[curr]){
+return false;
+}
+if(color[v]==-1){
+int colorV=1-currcolor;
+if(checkbipartitedfs(graph,v,color,colorV)==false)
+return false;
+}
+}
+return true;
+}
+bool isbipartite(vector<vector<int>>& graph){
+int n=graph.size();
+for(int i=0;i<n;i++){
+if(color[i]==-1){
+if(checkbipartitedfs(graph,i,color,1)==false)
+return false;
+}
+}
+return true;
+}
+};
