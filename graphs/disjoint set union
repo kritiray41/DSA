@@ -1,0 +1,19 @@
+//logic behind dsu-first-combine the two given set ,second-tell if two numbers belong to same set or not 
+class solution{
+  public:
+  int find(int i,vector<int>& parent){
+    if(i==parent[i]){
+      return i;
+    }
+    return find(parent[i],parent);
+  }
+  void union(int x,int y,vector<int> parent){
+    int x_parent=find(x,parent);
+    int y_parent=find(y,parent);
+    if(x_parent!=y_parent){
+      parent[x_parent]=y_parent;
+    }
+  }
+  
+      
+    
