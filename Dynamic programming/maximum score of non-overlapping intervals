@@ -1,0 +1,77 @@
+class Solution {
+public:
+
+struct node{
+    long long score =-1;
+    vector<int> idx;
+};
+int n;
+vector<int>nextidx;
+vector<vector<node>> t;
+int findnext(vector<vector<int>>& intervals,int r){
+    int l=0;
+    int h =n-1;
+    int result=n;
+    while(l<=h){
+        int mid=(l+h)/2;
+        if(intervals[mid][0]>r){
+            result=mid;
+            h=mid-1;
+
+        }
+        else{
+            l=mid+1;
+        }
+    }
+    return result;
+}
+
+node solve(vector<vector<int>>& intervals,int i,int k){
+    if(k==0||i>=n){
+        return node();
+    }
+    if(t[i][k].score!=-1){
+return t[i][k];
+    }
+    node skip=solve(intervals,i+1,k);
+    int weight=intervals[i][2];
+    int idx=intervals[i][3];
+    int j=nextidx[i];
+    node temp=solve(intervals,j,k-1);
+    node take;
+    take.score=temp.score+weight;
+    take.idx=temp.idx;
+    take.idx.push_back(idx);
+    sort(begin(take.idx),end(take.idx));
+    node result;
+    if(skip.score>take.score){
+        result=skip;
+
+    }
+    else if(skip.score<take.score){
+        result=take;
+    }
+    else{
+        result=(skip.idx<take.idx)?skip:take;
+    }
+    return t[i][k]=result;
+}
+ 
+    vector<int> maximumWeight(vector<vector<int>>& intervals) {
+         n=intervals.size();
+        for(int i=0;i<n;i++){
+            intervals[i].push_back(i);
+        }
+
+        sort(begin(intervals),end(intervals));
+        nextidx.resize(n);
+        for(int i=0;i<n;i++){
+            int end=intervals[i][1];
+            nextidx[i]=findnext(intervals,end);//binary search
+
+        }
+        int K=4;
+        t.assign(n+1,vector<node>(K+1));
+        return solve(intervals,0,K).idx;
+    }
+};
