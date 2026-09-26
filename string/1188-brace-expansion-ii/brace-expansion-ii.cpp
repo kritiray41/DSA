@@ -1,0 +1,63 @@
+class Solution {
+public:
+    set<string> multiply(const set<string>& a, const set<string>& b) {
+        set<string> res;
+
+        for (const string& x : a) {
+            for (const string& y : b) {
+                res.insert(x + y);
+            }
+        }
+
+        return res;
+    }
+
+    set<string> parseAtom(string& s, int& i) {
+        if (s[i] >= 'a' && s[i] <= 'z') {
+            return {string(1, s[i++])};
+        }
+
+        // s[i] == '{'
+        i++;
+
+        set<string> res = parseExpression(s, i);
+
+        // skip '}'
+        i++;
+
+        return res;
+    }
+
+    set<string> parseConcat(string& s, int& i) {
+        set<string> res = {""};
+
+        while (i < s.size() && s[i] != '}' && s[i] != ',') {
+            set<string> cur = parseAtom(s, i);
+            res = multiply(res, cur);
+        }
+
+        return res;
+    }
+
+    set<string> parseExpression(string& s, int& i) {
+        set<string> res = parseConcat(s, i);
+
+        while (i < s.size() && s[i] == ',') {
+            i++;
+
+            set<string> cur = parseConcat(s, i);
+
+            res.insert(cur.begin(), cur.end());
+        }
+
+        return res;
+    }
+
+    vector<string> braceExpansionII(string expression) {
+        int i = 0;
+
+        set<string> result = parseExpression(expression, i);
+
+        return vector<string>(result.begin(), result.end());
+    }
+};
