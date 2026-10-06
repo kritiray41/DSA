@@ -5,7 +5,7 @@ vector<vector<int>> result;
             while(i<j){
                 if(nums[i]+nums[j]>target){
                     j--;
-                }
+                } 
                 else if(nums[i]+nums[j]<target){
                     i++;
                 }
