@@ -1,0 +1,67 @@
+
+class Solution {
+public:
+    long long minSumSquareDiff(vector<int>& nums1, vector<int>& nums2, int k1, int k2) {
+        int n = nums1.size();
+        long long k = (long long)k1 + k2;
+        vector<long long> diff(n);
+        for (int i = 0; i < n; i++) {
+            diff[i] = abs(nums1[i] - nums2[i]);
+        }
+
+        sort(diff.begin(), diff.end());
+
+        long long low = 0;
+        long long high = diff[n - 1];
+
+        while (low < high) {
+            long long mid = (low + high) / 2;
+
+            long long need = 0;
+
+            for (long long x : diff) {
+                if (x > mid) {
+                    need += x - mid;
+                }
+            }
+
+            if (need <= k)
+                high = mid;
+            else
+                low = mid + 1;
+        }
+
+        // low = smallest possible maximum difference
+        long long limit = low;
+
+        // Reduce all differences greater than limit
+        long long used = 0;
+
+        for (long long &x : diff) {
+            if (x > limit) {
+                used += x - limit;
+                x = limit;
+            }
+        }
+
+        // Remaining operations
+        long long left = k - used;
+
+        // Use remaining operations on the largest values
+        for (int i = n - 1; i >= 0 && left > 0; i--) {
+            if (diff[i] > 0) {
+                diff[i]--;
+                left--;
+            }
+        }
+
+        // Calculate answer
+        long long ans = 0;
+
+        for (long long x : diff) {
+            ans += x * x;
+        }
+
+        return ans;
+    }
+};
