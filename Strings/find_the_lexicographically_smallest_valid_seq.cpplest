@@ -1,0 +1,85 @@
+\*
+# Valid Sequence (`word1`, `word2`) - C++ Solution
+
+This repository contains a C++ solution for finding the lexicographically smallest sequence of indices in `word1` that can match `word2`, allowing at most **one mismatch** (forced match).
+
+## Approach
+
+This solution uses a **two-pass greedy strategy** combining suffix precomputation with a forward pointer traversal.
+
+### Step-by-Step Breakdown
+
+1. **Suffix Precomputation (`righthandmatched` array)**
+   - **Objective:** To know beforehand whether the remaining suffix of `word1` can match the remaining suffix of `word2` starting from any given index.
+   - **How it works:** 
+     - We create an array `righthandmatched` of size `n + 1` (where `n` is the length of `word1`).
+     - We iterate **backwards** from the end of `word1` to the beginning.
+     - We track how many characters of `word2` can be successfully matched from right to left using a pointer `j` starting at `m - 1`.
+     - `righthandmatched[i]` stores the total number of characters from the suffix of `word2` that can be matched starting at or after index `i` in `word1`.
+
+2. **Greedy Forward Construction (`seq`)**
+   - **Objective:** Build the final index sequence greedily to ensure the lexicographically smallest result (taking smaller indices first).
+   - **How it works:**
+     - We use two pointers, `i` for `word1` and `j` for `word2`, starting at `0`.
+     - We maintain a boolean flag `canchangepower = true` to allow **one** forced match/substitution when characters don't align.
+     - **Exact Match:** If `word1[i] == word2[j]`, we greedily take index `i`, append it to `seq`, and advance `j`.
+     - **Forced Match (Mismatch Case):** If they don't match, we check two conditions:
+       1. Do we still have our change power available (`canchangepower == true`)?
+       2. Can the remaining part of `word1` (from `i + 1` onwards) cover the remaining part of `word2`? This is verified using the precomputed suffix check: `righthandmatched[i + 1] >= m - j - 1`.
+     - If both conditions are met, we use the change power, take index `i`, advance `j`, and set `canchangepower = false`.
+     - We increment `i` in every iteration to move forward through `word1`.
+
+3. **Validation & Return**
+   - After the loop finishes, we check if `j == m` (meaning all characters of `word2` were successfully matched). If yes, we return `seq`; otherwise, we return an empty vector.
+
+## Complexity Analysis
+
+- **Time Complexity:** $O(n + m)$, where $n$ is the length of `word1` and $m$ is the length of `word2`. We perform a single backward pass to precompute the suffix matches and a single forward pass to construct the sequence.
+- **Space Complexity:** $O(n)$ to store the `righthandmatched` array and the resulting sequence indices.
+
+## C++ Code 
+*/
+
+class Solution {
+public:
+    vector<int> validSequence(string word1, string word2) {
+        int n = word1.length();
+        int m = word2.length();
+
+        vector<int> righthandmatched(n + 1, 0);
+
+        int j = m - 1;
+
+        for (int i = n - 1; i >= 0; i--) {
+            righthandmatched[i] = righthandmatched[i + 1];
+
+            if (j >= 0 && word1[i] == word2[j]) {
+                righthandmatched[i]++;
+                j--;
+            }
+        }
+
+        vector<int> seq;
+        bool canchangepower = true;
+
+        int i = 0;
+        j = 0;
+
+        while (i < n && j < m) {
+            if (word1[i] == word2[j]) {
+                seq.push_back(i);
+                j++;
+            } 
+            else if (canchangepower &&
+                     righthandmatched[i + 1] >= m - j - 1) {
+                seq.push_back(i);
+                j++;
+                canchangepower = false;
+            }
+
+            i++;
+        }
+
+        return (j == m) ? seq : vector<int>();
+    }
+};
